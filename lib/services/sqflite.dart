@@ -13,7 +13,7 @@ class SqfliteService {
   static final SqfliteService db = SqfliteService();
   Database _database;
   final _todoListStresm = BehaviorSubject<List<Todo>>();
-  int _filter = 0;
+  int _filter = -1;
 
   void changeFilter(int filter) {
     _filter = filter;
@@ -113,9 +113,6 @@ class SqfliteService {
     var res = (_filter > -1 ) ? await db.query("Todo", orderBy: "todoByDate", where: "done = ?", whereArgs: [_filter]) : await db.query("Todo", orderBy: "todoByDate");
     List<Todo> list =
         res.isNotEmpty ? res.map((c) => Todo.fromMap(c)).toList() : [];
-      for (Todo i in list) {
-        print(i.done.toString());
-      }
     return list;
   }
 

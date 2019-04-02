@@ -43,7 +43,7 @@ class _DescFieldWidgetState extends State<DescFieldWidget> {
               ),
               autofocus: true,
               controller: ctr,
-              maxLines: 3,
+              maxLines: 2,
               onChanged: (text) => widget.textChanged(text),
             ),
           ),

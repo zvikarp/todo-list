@@ -17,6 +17,12 @@ class TodoListWidget extends StatelessWidget {
     logicService.updateSelectedTodos(_selectedTodos);
   }
 
+  Future<bool> _goToTodoPage(BuildContext context, int id) async {
+    Todo todo = await sqfliteService.getTodo(id);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => TodoPage(todo: todo,)));
+    return false;
+  }
+
   bool _todoSelectToggle(BuildContext context, int id, int type, bool isSelected) {
     if (isSelected) {
       _selectedTodos.remove(id);
@@ -33,7 +39,7 @@ class TodoListWidget extends StatelessWidget {
           _updateSelectedCounter();
           return true;
         } else {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => TodoPage(id: id,)));
+          _goToTodoPage(context, id);
           return false;
         }
       }
@@ -51,7 +57,6 @@ class TodoListWidget extends StatelessWidget {
           }
           return ListView.separated(
             padding: EdgeInsets.symmetric(vertical: 24),
-            shrinkWrap: true,
             itemCount: length,
             itemBuilder: (BuildContext context, index) {
               if (index == 0) return TopAppBarWidget();

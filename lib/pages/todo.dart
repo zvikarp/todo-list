@@ -12,13 +12,13 @@ import 'package:todo_list/widgets/todo/geoSelector.dart';
 class TodoPage extends StatefulWidget {
   TodoPage({
     Key key,
-    this.id = -1,
+    this.todo,
   }) : super(key: key);
 
   @override
   _TodoPageState createState() => _TodoPageState();
 
-  final int id;
+  final Todo todo;
 }
 
 class _TodoPageState extends State<TodoPage> {
@@ -29,7 +29,6 @@ class _TodoPageState extends State<TodoPage> {
   bool _done = false;
 
   void _titleChanged(String title) {
-    print(title);
     setState(() {
       _title = title;
     });
@@ -54,15 +53,13 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   void _getTodo() async {
-    if (widget.id > -1) {
-      Todo todo = await sqfliteService.getTodo(widget.id);
-      print("hi!");
-      _titleChanged(todo.title);
-      _descChanged(todo.desc);
-      _todoByDateChanged(todo.todoByDate);
-      _geoChanged(todo.geo);
+    if (widget.todo != null) {
+      _titleChanged(widget.todo.title);
+      _descChanged(widget.todo.desc);
+      _todoByDateChanged(widget.todo.todoByDate);
+      _geoChanged(widget.todo.geo);
       setState(() {
-       _done = todo.done; 
+       _done = widget.todo.done; 
       });
     }
   }
@@ -75,7 +72,7 @@ class _TodoPageState extends State<TodoPage> {
 
   void _saveButtonPressed() {
     Todo newTodo = Todo(
-      id: widget.id,
+      id: widget.todo.id,
       title: _title,
       desc: _desc,
       createdOnDate: DateTime.now().toString(),

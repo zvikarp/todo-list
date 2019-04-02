@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 /// Todo object
 class Todo {
   Todo({

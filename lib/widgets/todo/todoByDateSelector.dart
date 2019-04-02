@@ -13,19 +13,16 @@ class TodoByDateSelectorWidget extends StatelessWidget {
             Icons.calendar_today,
             color: Theme.of(context).primaryColor,
           ),
-          SizedBox(
-            width: 16.0,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text("Due by: ", style: Theme.of(context).textTheme.subtitle,),
           ),
-          Container(
-            child: Text(
-              "00:00",
-              style: Theme.of(context).textTheme.subtitle,
-            ),
+          Text(
+            "00:00",
+            style: Theme.of(context).textTheme.subtitle,
           ),
-          SizedBox(
-            width: 16.0,
-          ),
-          Container(
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               "DD/MM/YYYY",
               style: Theme.of(context).textTheme.subtitle,
