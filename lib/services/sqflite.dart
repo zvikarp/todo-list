@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 
 import 'package:todo_list/models/todo.dart';
 
-/// the sqflite service. it handales all connections between the app and the qslite database.
+/// the sqflite service. it handales all connections between the app and the qslite database
 class SqfliteService {
   static final SqfliteService db = SqfliteService();
   Database _database;
@@ -37,8 +37,8 @@ class SqfliteService {
     });
   }
 
-  /// creates a new item in the 'Todo' table. the function recives a [Todo].
-  newTodo(Todo newTodo) async {
+  /// creates a new item in the 'Todo' table. the function recives a [Todo]
+  Future newTodo(Todo newTodo) async {
     final db = await database;
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Todo");
     int id = table.first["id"];
@@ -58,15 +58,15 @@ class SqfliteService {
     return raw;
   }
 
-  /// updates a existing item in the 'Todo' table by its id. the function recives a [Todo].
-  Future updateTodo(Todo newTodo) async {
+  /// updates a existing item in the 'Todo' table by its id. the function recives a [Todo]
+  Future updateTodo(Todo todo) async {
     final db = await database;
-    var res = await db.update("Todo", newTodo.toMap(),
-        where: "id = ?", whereArgs: [newTodo.id]);
+    var res = await db.update("Todo", todo.toMap(),
+        where: "id = ?", whereArgs: [todo.id]);
     return res;
   }
 
-  /// recives one item from the 'Todo' table by a id.
+  /// recives one item from the 'Todo' table by a id
   Future getTodo(int id) async {
     final db = await database;
     var res = await db.query("Todo", where: "id = ?", whereArgs: [id]);
@@ -75,21 +75,29 @@ class SqfliteService {
 
   /// returns the full table 'Todo'
   Future<List<Todo>> getAllTodos() async {
-    print("test 3");
     final db = await database;
     var res = await db.query("Todo");
-    print(res.map((c) => Todo.fromMap(c)).toList());
-    List<Todo> list = res.isNotEmpty ? res.map((c) => Todo.fromMap(c)).toList() : [];
-    print(list);
+    List<Todo> list =
+        res.isNotEmpty ? res.map((c) => Todo.fromMap(c)).toList() : [];
     return list;
   }
 
-  /// deletes a todo by a given id.
+  /// deletes a todo by a given id
   Future deleteTodo(int id) async {
     final db = await database;
     return db.delete("Todo", where: "id = ?", whereArgs: [id]);
   }
 
+  /// saves the todo, if its new of old
+  Future saveTodo(Todo todo) async {
+    var res;
+    if (todo.id < 0) {
+      res = await newTodo(todo);
+    } else {
+      res = await updateTodo(todo);
+    }
+    return res;
+  }
 }
 
 final SqfliteService sqfliteService = SqfliteService();

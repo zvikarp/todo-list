@@ -13,9 +13,9 @@ class ThemeUtil {
       primaryColor: Colors.blue[700],
       primaryColorLight: Colors.blue[400],
       primaryColorDark:  Colors.blue[800],
-      accentColor: Colors.grey[50],
+      accentColor: Colors.blue[700],
       errorColor: Colors.deepOrange[500],
-      cursorColor: Colors.blue[700],
+      cursorColor: Colors.blue[200],
       
       // icon themes (regular and accent)
       iconTheme: IconThemeData(
@@ -27,7 +27,7 @@ class ThemeUtil {
       
       // text theme (regular and accent)
       textTheme: TextTheme(
-        headline: TextStyle(fontSize: 36.0, fontFamily: 'Overpass', color: Colors.black87,   fontWeight: FontWeight.w500),
+        headline: TextStyle(fontSize: 36.0, fontFamily: 'Overpass', color: Colors.black87,   fontWeight: FontWeight.w300),
         title:    TextStyle(fontSize: 20.0, fontFamily: 'Overpass', color: Colors.black87, fontWeight: FontWeight.w500),
         subtitle: TextStyle(fontSize: 14.0, fontFamily: 'Lato',     color: Colors.black54, fontWeight: FontWeight.w500),
         body1:    TextStyle(fontSize: 20.0, fontFamily: 'Lato',     color: Colors.black87, fontWeight: FontWeight.w500),
@@ -35,7 +35,7 @@ class ThemeUtil {
         button:   TextStyle(fontSize: 14.0, fontFamily: 'Lato',     color: Colors.black87, fontWeight: FontWeight.w700),
       ),
       accentTextTheme: TextTheme(
-        headline: TextStyle(fontSize: 36.0, fontFamily: 'Overpass', color: Colors.white,   fontWeight: FontWeight.w500),
+        headline: TextStyle(fontSize: 36.0, fontFamily: 'Overpass', color: Colors.white,   fontWeight: FontWeight.w300),
         title:    TextStyle(fontSize: 20.0, fontFamily: 'Overpass', color: Colors.white, fontWeight: FontWeight.w500),
         subtitle: TextStyle(fontSize: 14.0, fontFamily: 'Lato',     color: Colors.white, fontWeight: FontWeight.w500),
         body1:    TextStyle(fontSize: 20.0, fontFamily: 'Lato',     color: Colors.white, fontWeight: FontWeight.w500),
