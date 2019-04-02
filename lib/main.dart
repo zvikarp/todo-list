@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/utils/theme.dart';
 
 void main() => runApp(TodoListApp());
 
@@ -7,9 +8,7 @@ class TodoListApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: themeUtil.getTheme(),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
