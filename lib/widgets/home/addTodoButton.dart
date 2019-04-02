@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:todo_list/services/sqflite.dart';
+import 'package:todo_list/models/todo.dart';
+
 /// add todo button
 class AddTodoButtonWidget extends StatelessWidget {
   AddTodoButtonWidget({Key key}) : super(key: key);
@@ -10,7 +13,17 @@ class AddTodoButtonWidget extends StatelessWidget {
       width: 200,
       child: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
-        onPressed: () {},
+        onPressed: () { // TODO: open a dialog to create a new todo. the current function is 100% temporary
+          sqfliteService.newTodo(Todo(
+            title: "title",
+            desc: "desc",
+            createdOnDate: "now",
+            done: false,
+            synced: false,
+            geo: "geo location",
+            todoByDate: "soon",
+          ));
+        },
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         tooltip: 'Increment',

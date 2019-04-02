@@ -28,16 +28,16 @@ class ThemeUtil {
       // text theme (regular and accent)
       textTheme: TextTheme(
         headline: TextStyle(fontSize: 36.0, fontFamily: 'Overpass', color: Colors.black87,   fontWeight: FontWeight.w500),
-        title:    TextStyle(fontSize: 18.0, fontFamily: 'Overpass', color: Colors.black87, fontWeight: FontWeight.w500),
-        subtitle: TextStyle(fontSize: 16.0, fontFamily: 'Lato',     color: Colors.black54, fontWeight: FontWeight.w500),
+        title:    TextStyle(fontSize: 20.0, fontFamily: 'Overpass', color: Colors.black87, fontWeight: FontWeight.w500),
+        subtitle: TextStyle(fontSize: 14.0, fontFamily: 'Lato',     color: Colors.black54, fontWeight: FontWeight.w500),
         body1:    TextStyle(fontSize: 20.0, fontFamily: 'Lato',     color: Colors.black87, fontWeight: FontWeight.w500),
         body2:    TextStyle(fontSize: 16.0, fontFamily: 'Lato',     color: Colors.black87, fontWeight: FontWeight.w700),
         button:   TextStyle(fontSize: 14.0, fontFamily: 'Lato',     color: Colors.black87, fontWeight: FontWeight.w700),
       ),
       accentTextTheme: TextTheme(
         headline: TextStyle(fontSize: 36.0, fontFamily: 'Overpass', color: Colors.white,   fontWeight: FontWeight.w500),
-        title:    TextStyle(fontSize: 18.0, fontFamily: 'Overpass', color: Colors.white, fontWeight: FontWeight.w500),
-        subtitle: TextStyle(fontSize: 16.0, fontFamily: 'Lato',     color: Colors.white, fontWeight: FontWeight.w500),
+        title:    TextStyle(fontSize: 20.0, fontFamily: 'Overpass', color: Colors.white, fontWeight: FontWeight.w500),
+        subtitle: TextStyle(fontSize: 14.0, fontFamily: 'Lato',     color: Colors.white, fontWeight: FontWeight.w500),
         body1:    TextStyle(fontSize: 20.0, fontFamily: 'Lato',     color: Colors.white, fontWeight: FontWeight.w500),
         body2:    TextStyle(fontSize: 16.0, fontFamily: 'Lato',     color: Colors.white, fontWeight: FontWeight.w700),
         button:   TextStyle(fontSize: 14.0, fontFamily: 'Lato',     color: Colors.white, fontWeight: FontWeight.w700),
