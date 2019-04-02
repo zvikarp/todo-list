@@ -12,7 +12,7 @@ class TodoTileWidget extends StatefulWidget {
   }) : super(key: key);
 
   final Todo todo;
-  final bool Function(int, int, bool) todoItemSelect;
+  final bool Function(BuildContext, int, int, bool) todoItemSelect;
 
   @override
   _TodoTileWidgetState createState() => _TodoTileWidgetState();
@@ -30,7 +30,7 @@ class _TodoTileWidgetState extends State<TodoTileWidget> {
   }
 
   void _onTodoSelected(int type) {
-      bool newSelected = widget.todoItemSelect(this.widget.todo.id, type, selected);
+      bool newSelected = widget.todoItemSelect(context, this.widget.todo.id, type, selected);
       setState(() {
        selected = newSelected; 
       });
@@ -121,14 +121,28 @@ class _TodoTileWidgetState extends State<TodoTileWidget> {
         ),
         borderRadius: BorderRadius.circular(4),
       ),
-      child: Text(
-        this.widget.todo.todoByDate + "03:40 12/05/19",
-        style: TextStyle(
-          fontSize: 10.0,
-          fontFamily: 'Lato',
-          color: Colors.green,
-          fontWeight: FontWeight.w500,
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            this.widget.todo.todoByDate + "created by: 03:40 12/05/19",
+            style: TextStyle(
+              fontSize: 10.0,
+              fontFamily: 'Lato',
+              color: Colors.green,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          Text(
+            this.widget.todo.todoByDate + "due by: 03:40 12/05/19",
+            style: TextStyle(
+              fontSize: 10.0,
+              fontFamily: 'Lato',
+              color: Colors.green,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
       ),
     );
   }

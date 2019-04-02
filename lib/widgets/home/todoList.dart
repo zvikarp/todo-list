@@ -4,6 +4,7 @@ import 'package:todo_list/widgets/home/todoTile.dart';
 import 'package:todo_list/models/todo.dart';
 import 'package:todo_list/services/sqflite.dart';
 import 'package:todo_list/services/logic.dart';
+import 'package:todo_list/pages/todo.dart';
 
 import 'package:todo_list/widgets/home/topAppBar.dart';
 
@@ -16,7 +17,7 @@ class TodoListWidget extends StatelessWidget {
     logicService.updateSelectedTodos(_selectedTodos);
   }
 
-  bool _todoSelectToggle(int id, int type, bool isSelected) {
+  bool _todoSelectToggle(BuildContext context, int id, int type, bool isSelected) {
     if (isSelected) {
       _selectedTodos.remove(id);
       _updateSelectedCounter();
@@ -32,6 +33,7 @@ class TodoListWidget extends StatelessWidget {
           _updateSelectedCounter();
           return true;
         } else {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => TodoPage(id: id,)));
           return false;
         }
       }
@@ -43,7 +45,7 @@ class TodoListWidget extends StatelessWidget {
     return StreamBuilder<List<Todo>>(
         stream: sqfliteService.subscribeToTodoListStresm(),
         builder: (BuildContext context, AsyncSnapshot<List<Todo>> snapshot) {
-          int length = 0;
+          int length = 1;
           if (snapshot.hasData) {
             length += snapshot.data.length;
           }
@@ -53,7 +55,7 @@ class TodoListWidget extends StatelessWidget {
             itemCount: length,
             itemBuilder: (BuildContext context, index) {
               if (index == 0) return TopAppBarWidget();
-              Todo todoItem = snapshot.data[index];
+              Todo todoItem = snapshot.data[index-1];
               return TodoTileWidget(
                 todo: todoItem,
                 todoItemSelect: _todoSelectToggle,
