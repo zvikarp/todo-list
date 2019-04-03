@@ -168,6 +168,8 @@ class SqfliteService {
     for (int id in ids) {
       await deleteTodo(id);
     }
+    _todoListStresm.add([]);
+    changeWasMadeToTodoList(-1);
     return true;
   }
 

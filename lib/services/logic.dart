@@ -9,9 +9,26 @@ class LogicService {
     return _selectedTodosStresm.stream;
   }
 
+
+
   void updateSelectedTodos(selectedTodos) {
+    print(selectedTodos);
     _selectedTodos = selectedTodos;
-    _selectedTodosStresm.add(selectedTodos);
+    _selectedTodosStresm.add(_selectedTodos);
+  }
+
+  void addSelectedTodo(selectedTodo) {
+    _selectedTodos.add(selectedTodo);
+    _selectedTodosStresm.add(_selectedTodos);
+  }
+
+  void removeTodoFromSelected(todo) {
+    _selectedTodos.remove(todo);
+    _selectedTodosStresm.add(_selectedTodos);
+  }
+
+  bool checkSelectedTodo(todo) {
+    return _selectedTodos.contains(todo);
   }
 
   List<int> getSelectedTodos() => _selectedTodos;

@@ -44,8 +44,6 @@ class FirestoreService {
 
   Future<bool> updateTodosById(List<int> ids) async {
     if (ids.length < 1) return true;
-    print(ids.toString() + "______________________________________");
-    print(ids.length);
     ids.forEach((id) async {
       bool res = false;
       Todo todo = await sqfliteService.getTodo(id);

@@ -9,34 +9,31 @@ import 'package:todo_list/pages/todo.dart';
 import 'package:todo_list/widgets/home/topAppBar.dart';
 
 /// the list of todo tiles
-class TodoListWidget extends StatelessWidget {
+class TodoListWidget extends StatefulWidget {
   TodoListWidget({Key key}) : super(key: key);
-  List<int> _selectedTodos = [];
 
-  void _updateSelectedCounter() {
-    logicService.updateSelectedTodos(_selectedTodos);
-  }
+  @override
+  _TodoListWidgetState createState() => _TodoListWidgetState();
+}
 
+class _TodoListWidgetState extends State<TodoListWidget> {
   Future<bool> _goToTodoPage(BuildContext context, int id) async {
     Todo todo = await sqfliteService.getTodo(id);
     Navigator.push(context, MaterialPageRoute(builder: (context) => TodoPage(todo: todo,)));
     return false;
   }
 
-  bool _todoSelectToggle(BuildContext context, int id, int type, bool isSelected) {
-    if (isSelected) {
-      _selectedTodos.remove(id);
-      _updateSelectedCounter();
+  bool _todoSelectToggle(BuildContext context, int id, int type) {
+    if (logicService.checkSelectedTodo(id)) {
+      logicService.removeTodoFromSelected(id);
       return false;
     } else {
       if (type == 1) {
-        _selectedTodos.add(id);
-        _updateSelectedCounter();
+        logicService.addSelectedTodo(id);
         return true;
       } else {
         if (logicService.getSelectedTodos().length > 0) {
-          _selectedTodos.add(id);
-          _updateSelectedCounter();
+          logicService.addSelectedTodo(id);
           return true;
         } else {
           _goToTodoPage(context, id);
@@ -50,7 +47,7 @@ class TodoListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<List<Todo>>(
         stream: sqfliteService.subscribeToTodoListStresm(),
-        builder: (BuildContext context, AsyncSnapshot<List<Todo>> snapshot) {
+        builder: (BuildContext context, snapshot) {
           int length = 1;
           if (snapshot.hasData) {
             length += snapshot.data.length;

@@ -46,7 +46,6 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   void _geoChanged(LatLng geo, double zoom) {
-    print(zoom);
     setState(() {
       _geo = geo;
       _zoom = zoom;
@@ -80,7 +79,7 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   void _saveButtonPressed() {
-    print(_id);
+    if (_title == "") return;
     Todo newTodo = Todo(
       id: _id,
       title: _title,

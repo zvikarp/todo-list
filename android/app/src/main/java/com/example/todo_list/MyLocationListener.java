@@ -18,20 +18,15 @@ import android.os.IBinder;
 import android.content.Intent;
 
 public class MyLocationListener extends Service implements LocationListener {
-    static final String TAG = MainActivity.class.getCanonicalName();
-    static String lat = "";
     static Map<Integer, Location> points = new HashMap<Integer, Location>();
     static Map<Integer, Boolean> notified = new HashMap<Integer, Boolean>();
-    private static Context context;
 
     static public void addPoint(int id, Location point) {
-        Log.d(TAG, "adding...");
         points.put(id, point);
         notified.put(id, false);
     }
 
     static public void removePoint(int id) {
-        Log.d(TAG, "removing...");
         points.remove(id);
         notified.remove(id);
     }

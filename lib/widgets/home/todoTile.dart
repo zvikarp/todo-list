@@ -15,7 +15,7 @@ class TodoTileWidget extends StatefulWidget {
   }) : super(key: key);
 
   final Todo todo;
-  final bool Function(BuildContext, int, int, bool) todoItemSelect;
+  final bool Function(BuildContext, int, int) todoItemSelect;
 
   @override
   _TodoTileWidgetState createState() => _TodoTileWidgetState();
@@ -33,7 +33,7 @@ class _TodoTileWidgetState extends State<TodoTileWidget> {
   }
 
   void _onTodoSelected(int type) {
-      bool newSelected = widget.todoItemSelect(context, this.widget.todo.id, type, selected);
+      bool newSelected = widget.todoItemSelect(context, this.widget.todo.id, type);
       setState(() {
        selected = newSelected; 
       });
@@ -182,8 +182,6 @@ class _TodoTileWidgetState extends State<TodoTileWidget> {
       background: _swipeToDeleteBackground(),
       onDismissed: (direction) {
         _deleteTodo();
-        // Scaffold.of(context).showSnackBar(
-        //     SnackBar(content: Text(todo.id.toString() + " dismissed")));
       },
       child: GestureDetector(
         onLongPress: () => _onTodoSelected(1),

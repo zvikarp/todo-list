@@ -30,7 +30,6 @@ class _BottomAppBarWidgetState extends State<BottomAppBarWidget> with SingleTick
   _updateTodos(idsList) async {
     bool res;
     res = await firestoreService.updateTodosById(idsList);
-    print(res.toString() + "dfgdgsgh");
     setState(() {
       _logedin = res;
     });

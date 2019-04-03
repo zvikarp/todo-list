@@ -32,7 +32,6 @@ import android.content.pm.PackageManager;
 public class MainActivity extends FlutterActivity {
 
   private static final String METHOD_CHANNEL = "com.example.todo_list/method_channel";
-  static final String TAG = MainActivity.class.getCanonicalName();
   private LocationManager locationManager = null;
   private LocationListener locationListener = new MyLocationListener();
   private static final int ACCESS_FINE_LOCATION = 1;

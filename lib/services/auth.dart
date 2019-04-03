@@ -19,11 +19,9 @@ class AuthService {
       FirebaseUser user = await _auth.signInWithCredential(credential);
       if (user != null) {
         _user = user;
-        print("loged in");
         return user;
       }
     } catch (e) {
-      print(e);
       try {
         _auth.signOut();
       } catch (e) {
