@@ -19,6 +19,9 @@ dev_dependencies:
   google_maps_flutter: ^0.5.0
   rxdart: ^0.21.0
   date_format: ^1.0.6
+  google_sign_in: ^4.0.1+1
+  firebase_auth: ^0.8.3
+  cloud_firestore: ^0.9.9
 
 flutter:
   uses-material-design: true

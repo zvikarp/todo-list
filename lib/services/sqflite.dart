@@ -13,21 +13,54 @@ class SqfliteService {
   static final SqfliteService db = SqfliteService();
   Database _database;
   final _todoListStresm = BehaviorSubject<List<Todo>>();
+  final _notSyncedStream = BehaviorSubject<List<int>>();
   int _filter = -1;
+  List<int> _notSyncedList = [];
 
   void changeFilter(int filter) {
     _filter = filter;
-    updateTodoListStream();
+    changeWasMadeToTodoList(-1);
+  }
+
+  initNotSyncedList() async {
+    _notSyncedList.clear();
+    List<Todo> todos = await getAllNotSyncedTodos();
+    for (Todo todo in todos) {
+      _notSyncedList.add(todo.id);
+    }
+    _notSyncedStream.add(_notSyncedList);
   }
 
   Stream subscribeToTodoListStresm() {
-    updateTodoListStream();
+    changeWasMadeToTodoList(-1);
     return _todoListStresm.stream;
   }
 
-  void updateTodoListStream() async {
+  Stream subscribeToNotSyncedStresm() {
+    initNotSyncedList();
+    return _notSyncedStream.stream;
+  }
+
+  void changeWasMadeToTodoList(int id) async {
     var todos = await getAllTodos();
     _todoListStresm.add(todos);
+    if (id > -1) {
+      _notSyncedList.add(id);
+      _notSyncedStream.add(_notSyncedList);
+    }
+  }
+
+  void todoWasSynced(int id) {
+    _notSyncedList.remove(id);
+    if (_notSyncedList.isEmpty) {
+      _notSyncedStream.add(_notSyncedList);
+    }
+  }
+
+  Future todoSynced(int id) async {
+    Todo todo = await getTodo(id);
+    todo.synced = true;
+    return updateTodo(todo, true);
   }
 
   Future<Database> get database async {
@@ -73,17 +106,17 @@ class SqfliteService {
           newTodo.done,
           newTodo.synced
         ]);
-    updateTodoListStream();
+    changeWasMadeToTodoList(id);
     return raw;
   }
 
   /// updates a existing item in the 'Todo' table by its id. the function recives a [Todo]
-  Future updateTodo(Todo todo) async {
+  Future updateTodo(Todo todo, [bool synced = false]) async {
     final db = await database;
-    todo = unsyncTodo(todo);
+    if (!synced) todo = unsyncTodo(todo);
     var res = await db.update("Todo", todo.toMap(),
         where: "id = ?", whereArgs: [todo.id]);
-    updateTodoListStream();
+    if (!synced) changeWasMadeToTodoList(todo.id);
     return res;
   }
 
@@ -92,6 +125,14 @@ class SqfliteService {
     final db = await database;
     var res = await db.query("Todo", where: "id = ?", whereArgs: [id]);
     return res.isNotEmpty ? Todo.fromMap(res.first) : null;
+  }
+
+  Future<List<Todo>> getAllNotSyncedTodos() async {
+    final db = await database;
+    var res = await db.query("Todo", where: "synced = ?", whereArgs: [0]);
+    List<Todo> list =
+        res.isNotEmpty ? res.map((c) => Todo.fromMap(c)).toList() : [];
+    return list;
   }
 
   /// toggles the done state of a todo item, the function recives a [Todo]
@@ -120,7 +161,7 @@ class SqfliteService {
   Future deleteTodo(int id) async {
     final db = await database;
     var res = await db.delete("Todo", where: "id = ?", whereArgs: [id]);
-    updateTodoListStream();
+    changeWasMadeToTodoList(id);
     return res;
   }
 

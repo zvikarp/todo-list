@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:todo_list/services/sqflite.dart';
+import 'package:todo_list/services/firestore.dart';
 
 /// the bottom bar of the app
 class BottomAppBarWidget extends StatefulWidget {
@@ -16,8 +17,30 @@ class _BottomAppBarWidgetState extends State<BottomAppBarWidget> {
     'ToDo Tasks': 0,
     'Done Tasks': 1,
   };
+  bool _synced = false;
 
   String _selectedKey = "All Tasks";
+
+  _listenToSync() {
+    sqfliteService.subscribeToNotSyncedStresm().listen((idsList) {
+      if (idsList.length > 0) {
+        setState(() {
+         _synced = false;
+        });
+        firestoreService.updateTodosById(idsList);
+      } else {
+        setState(() {
+          _synced = true;
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _listenToSync();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +96,10 @@ class _BottomAppBarWidgetState extends State<BottomAppBarWidget> {
             SizedBox(
               width: 200.0,
             ),
-            Icon(Icons.more_vert),
+            IconButton(
+              icon: _synced ? Icon(Icons.sync) : Icon(Icons.sync_disabled),
+              onPressed: () {},
+            ),
           ],
         ),
       ),
