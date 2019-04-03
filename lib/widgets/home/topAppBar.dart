@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 class TopAppBarWidget extends StatelessWidget {
   TopAppBarWidget({Key key}) : super(key: key);
 
-  // TODO: make it taller
-  // TODO: fixup styling
-  // TODO: check why can't create a statless class
   @override
   Widget build(BuildContext context) {
     return Container(

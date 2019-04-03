@@ -4,6 +4,7 @@ import 'package:todo_list/services/auth.dart';
 import 'package:todo_list/services/sqflite.dart';
 import 'package:todo_list/models/todo.dart';
 
+/// this service hansles all the connections with firestore
 class FirestoreService {
   final Firestore _db = Firestore.instance;
 

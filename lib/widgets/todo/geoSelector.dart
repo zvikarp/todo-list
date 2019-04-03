@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+/// selesct a location for the task to be done at so the user well recive a notification
 class GeoSelectorWidget extends StatefulWidget {
   GeoSelectorWidget({
     Key key,
@@ -28,12 +29,6 @@ class _GeoSelectorWidgetState extends State<GeoSelectorWidget> {
 
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
-  }
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    print(widget.initGeo);
   }
 
   @override

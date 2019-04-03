@@ -4,7 +4,9 @@ import 'package:todo_list/services/sqflite.dart';
 import 'package:todo_list/services/firestore.dart';
 import 'package:todo_list/services/methodChannel.dart';
 
-/// the bottom bar of the app
+// pretty big class, in future shuld be split to sub-classes
+
+/// the bottom bar of the app, with filter options and sync notifier
 class BottomAppBarWidget extends StatefulWidget {
   BottomAppBarWidget({Key key}) : super(key: key);
 

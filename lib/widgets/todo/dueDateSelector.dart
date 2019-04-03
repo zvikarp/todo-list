@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:todo_list/utils/dateTime.dart';
 
+/// date selector to select a due-by date. the default is the currant time and date
 class DueDateSelectorWidget extends StatefulWidget {
   DueDateSelectorWidget({
     Key key,

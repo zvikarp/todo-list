@@ -1,5 +1,6 @@
 import 'package:rxdart/subjects.dart';
 
+/// just some service code that i didnt think belonged in any other service
 class LogicService {
     final _selectedTodosStresm = BehaviorSubject<List<int>>();
     List<int> _selectedTodos = [];

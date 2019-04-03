@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:todo_list/services/sqflite.dart';
 import 'package:todo_list/models/todo.dart';
 import 'package:todo_list/utils/dateTime.dart';
-// a todo tile
+
+// this class probably should have been split to sub-classes, but for the size of the app, it isn't crucial
+
+/// a todo tile, I know it should of had a map inside, i didn't see how it would fit in properly, but could be added fiarly easily
 class TodoTileWidget extends StatefulWidget {
   TodoTileWidget({
     Key key,

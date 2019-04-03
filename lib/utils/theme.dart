@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// unfortunatelly, i didn't have enough time to really play with this (and im also a bit color blint...) 
 
 /// this is the Theme class, it handles the theme for the whole application.
 class ThemeUtil {

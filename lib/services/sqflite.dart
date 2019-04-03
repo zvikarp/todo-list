@@ -70,7 +70,6 @@ class SqfliteService {
     return _database;
   }
 
-  /// creates a database with a table 'Todo' - if its the first time we are accessing the database
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "database.db");
@@ -89,7 +88,6 @@ class SqfliteService {
     });
   }
 
-  /// creates a new item in the 'Todo' table. the function recives a [Todo]
   Future newTodo(Todo newTodo) async {
     final db = await database;
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Todo");
@@ -112,7 +110,6 @@ class SqfliteService {
     return raw;
   }
 
-  /// updates a existing item in the 'Todo' table by its id. the function recives a [Todo]
   Future updateTodo(Todo todo, [bool synced = false]) async {
     final db = await database;
     if (!synced) todo = unsyncTodo(todo);
@@ -126,7 +123,6 @@ class SqfliteService {
     return res;
   }
 
-  /// recives one item from the 'Todo' table by a id
   Future getTodo(int id) async {
     final db = await database;
     var res = await db.query("Todo", where: "id = ?", whereArgs: [id]);
@@ -141,19 +137,16 @@ class SqfliteService {
     return list;
   }
 
-  /// toggles the done state of a todo item, the function recives a [Todo]
   Future toggleTodoDone(Todo todo) async {
     todo.done = !todo.done;
     return updateTodo(todo);
   }
 
-  /// if change happend to the todo, unsync it.
   Todo unsyncTodo(Todo todo) {
     todo.synced = false;
     return todo;
   }
 
-  /// returns the full table 'Todo'
   Future<List<Todo>> getAllTodos() async {
     final db = await database;
 
@@ -163,7 +156,6 @@ class SqfliteService {
     return list;
   }
 
-  /// deletes a todo by a given id
   Future deleteTodo(int id) async {
     final db = await database;
     var res = await db.delete("Todo", where: "id = ?", whereArgs: [id]);
@@ -172,7 +164,6 @@ class SqfliteService {
     return res;
   }
 
-  /// deletes a list of todo by a given ids
   Future deleteTodos(List<int> ids) async {
     for (int id in ids) {
       await deleteTodo(id);
@@ -180,7 +171,6 @@ class SqfliteService {
     return true;
   }
 
-  /// saves the todo, if its new of old
   Future saveTodo(Todo todo) async {
     var res;
     if (todo.id < 0) {

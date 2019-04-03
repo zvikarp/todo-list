@@ -14,9 +14,9 @@ class Todo {
   int id;
   String title;
   String desc;
-  String geo; // TODO: create a geoloaction model
-  String dueDate; // TODO: save as DateTime object
-  String createdOnDate; // TODO: save as DateTime object
+  String geo;
+  String dueDate;
+  String createdOnDate;
   bool done;
   bool synced;
 

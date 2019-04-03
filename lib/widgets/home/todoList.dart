@@ -8,7 +8,7 @@ import 'package:todo_list/pages/todo.dart';
 
 import 'package:todo_list/widgets/home/topAppBar.dart';
 
-// the list of todo tiles
+/// the list of todo tiles
 class TodoListWidget extends StatelessWidget {
   TodoListWidget({Key key}) : super(key: key);
   List<int> _selectedTodos = [];

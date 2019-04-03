@@ -26,11 +26,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  # assets:
-  #  - images/a_dot_burr.jpeg
-  #  - images/a_dot_ham.jpeg
-
-  # TODO: remove unimported fonts from the assets folder.
   fonts:
     - family: Lato
       fonts:

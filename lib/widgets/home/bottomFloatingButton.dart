@@ -4,7 +4,7 @@ import 'package:todo_list/services/logic.dart';
 import 'package:todo_list/services/sqflite.dart';
 import 'package:todo_list/pages/todo.dart';
 
-/// add todo button
+/// this button is pined to botton app bar, tggels between add and delete todo based on numer of selected todos.
 class BottomFloationgButtonWidget extends StatefulWidget {
   BottomFloationgButtonWidget({Key key}) : super(key: key);
 

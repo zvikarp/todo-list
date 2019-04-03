@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// the todos page app bar
 class TopAppBarWidget extends StatelessWidget {
   TopAppBarWidget({
     Key key,

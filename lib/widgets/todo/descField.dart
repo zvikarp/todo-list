@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// the description field for creating/editing a todo
 class DescFieldWidget extends StatefulWidget {
   DescFieldWidget({Key key, this.initText, @required this.textChanged})
       : super(key: key);

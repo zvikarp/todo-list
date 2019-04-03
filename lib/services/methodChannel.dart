@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
 
+/// this service connects to android via platform channels
 class MethodChannelService {
   static const methodChannel = const MethodChannel('com.example.todo_list/method_channel');
 

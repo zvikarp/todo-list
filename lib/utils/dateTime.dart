@@ -1,5 +1,6 @@
 import 'package:date_format/date_format.dart';
 
+/// a simple converter + formater for the time and date, so it would be able to be saved in the database and viewed properlly
 class DateTimeUtil {
   String dateToString(DateTime dateTime) {
     return (formatDate(

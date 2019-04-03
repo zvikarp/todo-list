@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// the title field for creating/editing a todo
 class TitleFieldWidget extends StatefulWidget {
   TitleFieldWidget({
     Key key,
