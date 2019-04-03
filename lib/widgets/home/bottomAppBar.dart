@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:todo_list/services/sqflite.dart';
 import 'package:todo_list/services/firestore.dart';
+import 'package:todo_list/services/methodChannel.dart';
 
 /// the bottom bar of the app
 class BottomAppBarWidget extends StatefulWidget {
@@ -48,6 +49,7 @@ class _BottomAppBarWidgetState extends State<BottomAppBarWidget> with SingleTick
   void initState() {
     super.initState();
     _listenToSync();
+    methodChannelService.getLocationUpdates();
     animationController = new AnimationController(
       vsync: this,
       duration: new Duration(seconds: 2),

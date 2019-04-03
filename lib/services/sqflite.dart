@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'package:todo_list/models/todo.dart';
+import 'package:todo_list/services/methodChannel.dart';
 
 /// the sqflite service. it handales all connections between the app and the qslite database
 class SqfliteService {
@@ -107,6 +108,7 @@ class SqfliteService {
           newTodo.synced
         ]);
     changeWasMadeToTodoList(id);
+    methodChannelService.addPoint(id, newTodo.geo);
     return raw;
   }
 
@@ -116,7 +118,11 @@ class SqfliteService {
     if (!synced) todo = unsyncTodo(todo);
     var res = await db.update("Todo", todo.toMap(),
         where: "id = ?", whereArgs: [todo.id]);
-    if (!synced) changeWasMadeToTodoList(todo.id);
+    if (!synced) {
+      changeWasMadeToTodoList(todo.id);
+      methodChannelService.removePoint(todo.id);
+      methodChannelService.addPoint(todo.id, todo.geo);
+    }
     return res;
   }
 
@@ -162,6 +168,7 @@ class SqfliteService {
     final db = await database;
     var res = await db.delete("Todo", where: "id = ?", whereArgs: [id]);
     changeWasMadeToTodoList(id);
+    methodChannelService.removePoint(id);
     return res;
   }
 
