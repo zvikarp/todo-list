@@ -46,17 +46,18 @@ class _TodoByDateSelectorWidgetState extends State<TodoByDateSelectorWidget> {
       context: context,
       initialTime: TimeOfDay(hour: _dueDate.hour, minute: _dueDate.minute),
     );
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         _dueDate = DateTime(
           _dueDate.year,
           _dueDate.month,
-          _dueDate.year,
+          _dueDate.day,
           picked.hour,
           picked.minute,
         );
       });
-    widget.dueDateChanged(_dueDate);
+      widget.dueDateChanged(_dueDate);
+    }
   }
 
   @override

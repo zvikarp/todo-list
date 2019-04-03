@@ -50,7 +50,8 @@ class _BottomFloationgButtonWidgetState extends State<BottomFloationgButtonWidge
   }
   void _deleteSelectedTodosById() async {
     await sqfliteService.deleteTodos(_selectedTodos);
-    logicService.updateSelectedTodos([]);
+    List<int> nonSelected = [];
+    logicService.updateSelectedTodos(nonSelected);
   }
 
   Widget _deleteSelectedTodos () {

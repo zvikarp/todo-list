@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:todo_list/services/sqflite.dart';
 import 'package:todo_list/utils/dateTime.dart';
+import 'package:todo_list/utils/latLng.dart';
 import 'package:todo_list/models/todo.dart';
 import 'package:todo_list/widgets/todo/topAppBar.dart';
 import 'package:todo_list/widgets/todo/titleField.dart';
@@ -25,8 +27,9 @@ class TodoPage extends StatefulWidget {
 class _TodoPageState extends State<TodoPage> {
   String _title = "";
   String _desc = "";
-  DateTime _dueDate = DateTime.now().add(Duration(hours: 1));
-  String _geo = "";
+  DateTime _dueDate = DateTime.now();
+  LatLng _geo = LatLng(32.0667, 34.7667);
+  double _zoom = 14.0;
   bool _done = false;
   int _id = -1;
 
@@ -42,9 +45,11 @@ class _TodoPageState extends State<TodoPage> {
     });
   }
 
-  void _geoChanged(String geo) {
+  void _geoChanged(LatLng geo, double zoom) {
+    print(zoom);
     setState(() {
       _geo = geo;
+      _zoom = zoom;
     });
   }
 
@@ -56,10 +61,11 @@ class _TodoPageState extends State<TodoPage> {
 
   void _getTodo() async {
     if (widget.todo != null) {
+      List<dynamic> geo = latLngUtil.stringToLatLng(widget.todo.geo);
       _titleChanged(widget.todo.title);
       _descChanged(widget.todo.desc);
       _dueDateChanged(dateTimeUtil.stringToDate(widget.todo.todoByDate));
-      _geoChanged(widget.todo.geo);
+      _geoChanged(geo[0], geo[1]);
       setState(() {
        _done = widget.todo.done;
        _id = widget.todo.id;
@@ -82,7 +88,7 @@ class _TodoPageState extends State<TodoPage> {
       createdOnDate: DateTime.now().toString(),
       todoByDate: dateTimeUtil.dateToString(_dueDate),
       done: _done,
-      geo: _geo,
+      geo: latLngUtil.latLngToString(_geo, _zoom),
       synced: false,
     );
     sqfliteService.saveTodo(newTodo);
@@ -113,7 +119,11 @@ class _TodoPageState extends State<TodoPage> {
                   initDueDate: _dueDate,
                   dueDateChanged: _dueDateChanged,
                 ),
-                GeoSelectorWidget(),
+                GeoSelectorWidget(
+                  initGeo: _geo,
+                  initZoom: _zoom,
+                  geoChanged: _geoChanged,
+                ),
               ],
             ),
           ),
