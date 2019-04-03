@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:todo_list/services/sqflite.dart';
+import 'package:todo_list/utils/dateTime.dart';
 import 'package:todo_list/models/todo.dart';
 import 'package:todo_list/widgets/todo/topAppBar.dart';
 import 'package:todo_list/widgets/todo/titleField.dart';
@@ -24,9 +25,10 @@ class TodoPage extends StatefulWidget {
 class _TodoPageState extends State<TodoPage> {
   String _title = "";
   String _desc = "";
-  String _todoByDate = "";
+  DateTime _dueDate = DateTime.now().add(Duration(hours: 1));
   String _geo = "";
   bool _done = false;
+  int _id = -1;
 
   void _titleChanged(String title) {
     setState(() {
@@ -40,15 +42,15 @@ class _TodoPageState extends State<TodoPage> {
     });
   }
 
-  void _todoByDateChanged(String todoByDate) {
-    setState(() {
-      _todoByDate = todoByDate;
-    });
-  }
-
   void _geoChanged(String geo) {
     setState(() {
       _geo = geo;
+    });
+  }
+
+  void _dueDateChanged(DateTime dueDate) {
+    setState(() {
+      _dueDate = dueDate;
     });
   }
 
@@ -56,10 +58,11 @@ class _TodoPageState extends State<TodoPage> {
     if (widget.todo != null) {
       _titleChanged(widget.todo.title);
       _descChanged(widget.todo.desc);
-      _todoByDateChanged(widget.todo.todoByDate);
+      _dueDateChanged(dateTimeUtil.stringToDate(widget.todo.todoByDate));
       _geoChanged(widget.todo.geo);
       setState(() {
-       _done = widget.todo.done; 
+       _done = widget.todo.done;
+       _id = widget.todo.id;
       });
     }
   }
@@ -71,12 +74,13 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   void _saveButtonPressed() {
+    print(_id);
     Todo newTodo = Todo(
-      id: widget.todo.id,
+      id: _id,
       title: _title,
       desc: _desc,
       createdOnDate: DateTime.now().toString(),
-      todoByDate: _todoByDate,
+      todoByDate: dateTimeUtil.dateToString(_dueDate),
       done: _done,
       geo: _geo,
       synced: false,
@@ -105,7 +109,10 @@ class _TodoPageState extends State<TodoPage> {
                   initText: _desc,
                   textChanged: _descChanged,
                 ),
-                TodoByDateSelectorWidget(),
+                TodoByDateSelectorWidget(
+                  initDueDate: _dueDate,
+                  dueDateChanged: _dueDateChanged,
+                ),
                 GeoSelectorWidget(),
               ],
             ),

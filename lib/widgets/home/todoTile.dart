@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:todo_list/services/sqflite.dart';
 import 'package:todo_list/models/todo.dart';
-
+import 'package:todo_list/utils/dateTime.dart';
 // a todo tile
 class TodoTileWidget extends StatefulWidget {
   TodoTileWidget({
@@ -125,7 +125,7 @@ class _TodoTileWidgetState extends State<TodoTileWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            this.widget.todo.todoByDate + "created by: 03:40 12/05/19",
+            "created on: " + dateTimeUtil.formatStringDate(this.widget.todo.createdOnDate),
             style: TextStyle(
               fontSize: 10.0,
               fontFamily: 'Lato',
@@ -134,7 +134,7 @@ class _TodoTileWidgetState extends State<TodoTileWidget> {
             ),
           ),
           Text(
-            this.widget.todo.todoByDate + "due by: 03:40 12/05/19",
+            "due by: " + dateTimeUtil.formatStringDate(this.widget.todo.todoByDate),
             style: TextStyle(
               fontSize: 10.0,
               fontFamily: 'Lato',

@@ -18,6 +18,7 @@ dev_dependencies:
   path_provider: ^0.5.0+1
   google_maps_flutter: ^0.5.0
   rxdart: ^0.21.0
+  date_format: ^1.0.6
 
 flutter:
   uses-material-design: true
