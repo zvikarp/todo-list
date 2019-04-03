@@ -9,6 +9,7 @@ class FirestoreService {
 
   Future<bool> updateTodo(Todo todo) async {
     String uid = await authService.getUid();
+    if (uid == null) return false;
     await _db
         .collection('users')
         .document(uid)
@@ -18,7 +19,7 @@ class FirestoreService {
       'title': todo.title,
       'desc': todo.desc,
       'geo': todo.geo,
-      'todoByDate': todo.todoByDate,
+      'dueDate': todo.dueDate,
       'createdOnDate': todo.createdOnDate,
       'done': todo.done,
       'synced': true
@@ -29,6 +30,7 @@ class FirestoreService {
 
   Future<bool> deleteTodo(int id) async {
     String uid = await authService.getUid();
+    if (uid == null) return false;
     await _db
         .collection('users')
         .document(uid)
@@ -40,12 +42,16 @@ class FirestoreService {
   }
 
   Future<bool> updateTodosById(List<int> ids) async {
+    if (ids.length < 1) return true;
     ids.forEach((id) async {
+      bool res = false;
       Todo todo = await sqfliteService.getTodo(id);
       if (todo == null) {
-        await deleteTodo(id);
+        res = await deleteTodo(id);
+        if (!res) return false;
       } else {
-        await updateTodo(todo);
+        res = await updateTodo(todo);
+        if (!res) return false;
       }
     });
     return true;

@@ -8,7 +8,7 @@ import 'package:todo_list/models/todo.dart';
 import 'package:todo_list/widgets/todo/topAppBar.dart';
 import 'package:todo_list/widgets/todo/titleField.dart';
 import 'package:todo_list/widgets/todo/descField.dart';
-import 'package:todo_list/widgets/todo/todoByDateSelector.dart';
+import 'package:todo_list/widgets/todo/dueDateSelector.dart';
 import 'package:todo_list/widgets/todo/geoSelector.dart';
 
 /// the page to create, display and edit todos
@@ -64,7 +64,7 @@ class _TodoPageState extends State<TodoPage> {
       List<dynamic> geo = latLngUtil.stringToLatLng(widget.todo.geo);
       _titleChanged(widget.todo.title);
       _descChanged(widget.todo.desc);
-      _dueDateChanged(dateTimeUtil.stringToDate(widget.todo.todoByDate));
+      _dueDateChanged(dateTimeUtil.stringToDate(widget.todo.dueDate));
       _geoChanged(geo[0], geo[1]);
       setState(() {
        _done = widget.todo.done;
@@ -86,7 +86,7 @@ class _TodoPageState extends State<TodoPage> {
       title: _title,
       desc: _desc,
       createdOnDate: DateTime.now().toString(),
-      todoByDate: dateTimeUtil.dateToString(_dueDate),
+      dueDate: dateTimeUtil.dateToString(_dueDate),
       done: _done,
       geo: latLngUtil.latLngToString(_geo, _zoom),
       synced: false,
@@ -115,7 +115,7 @@ class _TodoPageState extends State<TodoPage> {
                   initText: _desc,
                   textChanged: _descChanged,
                 ),
-                TodoByDateSelectorWidget(
+                DueDateSelectorWidget(
                   initDueDate: _dueDate,
                   dueDateChanged: _dueDateChanged,
                 ),

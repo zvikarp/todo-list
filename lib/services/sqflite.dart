@@ -80,7 +80,7 @@ class SqfliteService {
           "title TEXT,"
           "desc TEXT,"
           "geo TEXT,"
-          "todoByDate TEXT,"
+          "dueDate TEXT,"
           "createdOnDate TEXT,"
           "done BOOLEAN,"
           "synced BOOLEAN"
@@ -92,16 +92,16 @@ class SqfliteService {
   Future newTodo(Todo newTodo) async {
     final db = await database;
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM Todo");
-    int id = table.first["id"];
+    int id = table.first["id"] ?? 1;
     var raw = await db.rawInsert(
-        "INSERT Into Todo (id, title, desc, geo, todoByDate, createdOnDate, done, synced)"
+        "INSERT Into Todo (id, title, desc, geo, dueDate, createdOnDate, done, synced)"
         " VALUES (?,?,?,?,?,?,?,?)",
         [
           id,
           newTodo.title,
           newTodo.desc,
           newTodo.geo,
-          newTodo.todoByDate,
+          newTodo.dueDate,
           newTodo.createdOnDate,
           newTodo.done,
           newTodo.synced
@@ -151,7 +151,7 @@ class SqfliteService {
   Future<List<Todo>> getAllTodos() async {
     final db = await database;
 
-    var res = (_filter > -1 ) ? await db.query("Todo", orderBy: "todoByDate", where: "done = ?", whereArgs: [_filter]) : await db.query("Todo", orderBy: "todoByDate");
+    var res = (_filter > -1 ) ? await db.query("Todo", orderBy: "dueDate", where: "done = ?", whereArgs: [_filter]) : await db.query("Todo", orderBy: "dueDate");
     List<Todo> list =
         res.isNotEmpty ? res.map((c) => Todo.fromMap(c)).toList() : [];
     return list;

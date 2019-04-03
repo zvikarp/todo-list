@@ -14,21 +14,34 @@ class AuthService {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    FirebaseUser user = await _auth.signInWithCredential(credential);
+    try {
+      FirebaseUser user = await _auth.signInWithCredential(credential);
       if (user != null) {
         _user = user;
         print("loged in");
+        return user;
       }
-    return user;
-
+    } catch (e) {
+      print(e);
+      try {
+        _auth.signOut();
+      } catch (e) {
+        print(e);
+      }
+      return null;
+    }
+    return null;
   }
 
   Future<String> getUid() async {
-    if (_user != null) return _user.uid;
+    if (_user != null)
+      return _user.uid;
     else {
       await loginWithGoogle();
-      if (_user != null) return _user.uid;
-      else return null;
+      if (_user != null)
+        return _user.uid;
+      else
+        return null;
     }
   }
 }

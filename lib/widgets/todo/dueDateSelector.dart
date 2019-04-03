@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 
 import 'package:todo_list/utils/dateTime.dart';
 
-class TodoByDateSelectorWidget extends StatefulWidget {
-  TodoByDateSelectorWidget({
+class DueDateSelectorWidget extends StatefulWidget {
+  DueDateSelectorWidget({
     Key key,
     this.initDueDate,
     this.dueDateChanged,
   }) : super(key: key);
 
   @override
-  _TodoByDateSelectorWidgetState createState() =>
-      _TodoByDateSelectorWidgetState();
+  _DueDateSelectorWidgetState createState() =>
+      _DueDateSelectorWidgetState();
 
   final DateTime initDueDate;
   final void Function(DateTime) dueDateChanged;
 }
 
-class _TodoByDateSelectorWidgetState extends State<TodoByDateSelectorWidget> {
+class _DueDateSelectorWidgetState extends State<DueDateSelectorWidget> {
   DateTime _dueDate;
 
   _selectDate() async {

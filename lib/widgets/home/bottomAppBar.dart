@@ -11,27 +11,35 @@ class BottomAppBarWidget extends StatefulWidget {
   _BottomAppBarWidgetState createState() => _BottomAppBarWidgetState();
 }
 
-class _BottomAppBarWidgetState extends State<BottomAppBarWidget> {
+class _BottomAppBarWidgetState extends State<BottomAppBarWidget> with SingleTickerProviderStateMixin {
+  
+  AnimationController animationController;
+
   Map<String, int> _filterItems = {
     'All Tasks': -1,
     'ToDo Tasks': 0,
     'Done Tasks': 1,
   };
-  bool _synced = false;
+  bool _logedin = true;
 
   String _selectedKey = "All Tasks";
+
+  _updateTodos(idsList) async {
+    bool res;
+    res = await firestoreService.updateTodosById(idsList);
+    print(res.toString() + "dfgdgsgh");
+    setState(() {
+      _logedin = res;
+    });
+  }
 
   _listenToSync() {
     sqfliteService.subscribeToNotSyncedStresm().listen((idsList) {
       if (idsList.length > 0) {
-        setState(() {
-         _synced = false;
-        });
-        firestoreService.updateTodosById(idsList);
+        animationController.forward(from: 0.0);
+        _updateTodos(idsList);
       } else {
-        setState(() {
-          _synced = true;
-        });
+        animationController.stop();
       }
     });
   }
@@ -40,6 +48,37 @@ class _BottomAppBarWidgetState extends State<BottomAppBarWidget> {
   void initState() {
     super.initState();
     _listenToSync();
+    animationController = new AnimationController(
+      vsync: this,
+      duration: new Duration(seconds: 2),
+    );
+
+    animationController.repeat(
+    );
+  }
+
+  Widget _syncIcon() {
+    return new Container(
+      alignment: Alignment.center,
+      color: Colors.white,
+      child: new AnimatedBuilder(
+        animation: animationController,
+        child: Icon(Icons.sync),
+        builder: (BuildContext context, Widget _widget) {
+          return new Transform.rotate(
+            angle: animationController.value * 6.3,
+            child: _widget,
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _errorButton() {
+    return IconButton(
+      icon: Icon(Icons.sync_problem),
+      onPressed: () => sqfliteService.initNotSyncedList(),
+    );
   }
 
   @override
@@ -96,10 +135,7 @@ class _BottomAppBarWidgetState extends State<BottomAppBarWidget> {
             SizedBox(
               width: 200.0,
             ),
-            IconButton(
-              icon: _synced ? Icon(Icons.sync) : Icon(Icons.sync_disabled),
-              onPressed: () {},
-            ),
+            _logedin ? _syncIcon() : _errorButton(),
           ],
         ),
       ),

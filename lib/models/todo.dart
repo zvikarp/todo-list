@@ -5,7 +5,7 @@ class Todo {
     this.title,
     this.desc,
     this.geo,
-    this.todoByDate,
+    this.dueDate,
     this.createdOnDate,
     this.done,
     this.synced,
@@ -15,7 +15,7 @@ class Todo {
   String title;
   String desc;
   String geo; // TODO: create a geoloaction model
-  String todoByDate; // TODO: save as DateTime object
+  String dueDate; // TODO: save as DateTime object
   String createdOnDate; // TODO: save as DateTime object
   bool done;
   bool synced;
@@ -25,7 +25,7 @@ class Todo {
         title: json["title"],
         desc: json["desc"],
         geo: json["geo"],
-        todoByDate: json["todoByDate"],
+        dueDate: json["dueDate"],
         createdOnDate: json["createdOnDate"],
         done: json["done"] == 1,
         synced: json["synced"] == 1,
@@ -36,7 +36,7 @@ class Todo {
         "title": title,
         "desc": desc,
         "geo": geo,
-        "todoByDate": todoByDate,
+        "dueDate": dueDate,
         "createdOnDate": createdOnDate,
         "done": done,
         "synced": synced,

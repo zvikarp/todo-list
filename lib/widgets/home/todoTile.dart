@@ -134,7 +134,7 @@ class _TodoTileWidgetState extends State<TodoTileWidget> {
             ),
           ),
           Text(
-            "due by: " + dateTimeUtil.formatStringDate(this.widget.todo.todoByDate),
+            "due by: " + dateTimeUtil.formatStringDate(this.widget.todo.dueDate),
             style: TextStyle(
               fontSize: 10.0,
               fontFamily: 'Lato',
